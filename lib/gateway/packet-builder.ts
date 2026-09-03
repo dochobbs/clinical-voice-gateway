@@ -356,7 +356,7 @@ export function evaluateResponseFidelity(
 
   // Dose fidelity check: if packet resolved dose to 5 mL, ensure AI did NOT instruct 15 mL
   let dosageConsistent = true;
-  const resolvedDose = packet.doseCandidates.find((d) => d.isResolved);
+  const resolvedDose = packet.doseCandidates?.find((d) => d.isResolved);
   if (resolvedDose) {
     if (resolvedDose.normalized.includes("5") && lowerResp.includes("15")) {
       dosageConsistent = false;
@@ -369,7 +369,7 @@ export function evaluateResponseFidelity(
 
   // Medication fidelity check
   let medicationConsistent = true;
-  if (packet.medications.length > 0) {
+  if (packet.medications && packet.medications.length > 0) {
     const med = packet.medications[0];
     notes.push(`Medication focus maintained: ${med.normalized}`);
   }

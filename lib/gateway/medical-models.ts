@@ -32,9 +32,26 @@ export async function runMedicalModels(
     }));
   }
 
-  // Execute enabled models concurrently
-  const promises = requestedModels.map((m) => evaluateSingleModel(m, packet));
-  return Promise.all(promises);
+  // Run cloud models (gpt4o) concurrently, but run local Ollama models sequentially
+  // to avoid VRAM contention and model eviction aborts.
+  const gpt4oPromise = requestedModels.includes("gpt4o")
+    ? evaluateSingleModel("gpt4o", packet)
+    : null;
+
+  const results: MedicalModelConclusion[] = [];
+  for (const m of requestedModels) {
+    if (m !== "gpt4o") {
+      const localResult = await evaluateSingleModel(m, packet);
+      results.push(localResult);
+    }
+  }
+
+  if (gpt4oPromise) {
+    const gptRes = await gpt4oPromise;
+    results.push(gptRes);
+  }
+
+  return results;
 }
 
 async function evaluateSingleModel(
@@ -160,7 +177,7 @@ async function evaluateSingleModel(
   try {
     const prompt = createClinicalPrompt(packet);
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 60000); // 60 sec timeout for local inference
+    const timeout = setTimeout(() => controller.abort(), 180000); // 180 sec timeout for local inference
 
     const res = await fetch(`${baseUrl}/chat/completions`, {
       method: "POST",
@@ -176,6 +193,8 @@ async function evaluateSingleModel(
           { role: "user", content: prompt },
         ],
         temperature: 0.1,
+        max_tokens: 450,
+        stop: ["<end_of_turn>", "<eos>"],
       }),
       signal: controller.signal,
     });
