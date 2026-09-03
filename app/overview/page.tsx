@@ -22,6 +22,7 @@ import {
   ChevronRight,
   GitBranch,
   BookOpen,
+  Globe,
 } from "lucide-react";
 
 export default function OverviewPage() {
@@ -508,6 +509,92 @@ export default function OverviewPage() {
                   of latency do not matter, AssemblyAI is phenomenal. In our modular gateway, AssemblyAI can be plugged
                   in as an asynchronous documentation witness alongside Nova-3.
                 </p>
+              </div>
+            </div>
+
+            {/* Google Chirp Versioning Decoded (Chirp 1 vs Chirp 2 vs Chirp 3) */}
+            <div style={{ background: "#ffffff", border: "1px solid var(--line)", borderRadius: "10px", padding: "20px" }}>
+              <h4 style={{ margin: "0 0 8px", fontSize: "15px", color: "#1d4ed8", display: "flex", alignItems: "center", gap: "8px" }}>
+                <Cpu style={{ width: 16 }} /> Google Chirp Versioning Decoded: Chirp 1 vs. Chirp 2 vs. Chirp 3
+              </h4>
+              <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 14px", lineHeight: 1.5 }}>
+                Google's Universal Speech Model (USM) lineage has evolved rapidly in Google Cloud Speech-to-Text V2:
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", fontSize: "12px" }}>
+                <div style={{ border: "1px solid var(--line)", borderRadius: "6px", padding: "12px", background: "var(--card-subtle)" }}>
+                  <span style={{ fontSize: "10px", fontFamily: "var(--font-mono)", color: "var(--muted)", fontWeight: 700 }}>2023 · ORIGINAL</span>
+                  <strong style={{ display: "block", fontSize: "13px", color: "var(--ink)", margin: "2px 0 6px" }}>Chirp 1 (USM)</strong>
+                  <p style={{ margin: 0, color: "var(--muted)", lineHeight: 1.4 }}>
+                    Google's first 2-billion parameter self-supervised speech model trained on 12 million hours of audio across 100+ languages. Demonstrated that self-supervised representation transfers across low-resource dialects.
+                  </p>
+                </div>
+                <div style={{ border: "1px solid var(--emerald-border)", borderRadius: "6px", padding: "12px", background: "var(--emerald-bg)" }}>
+                  <span style={{ fontSize: "10px", fontFamily: "var(--font-mono)", color: "#047857", fontWeight: 700 }}>CURRENT GA · SPEECH V2</span>
+                  <strong style={{ display: "block", fontSize: "13px", color: "#064e3b", margin: "2px 0 6px" }}>Chirp 2 (Production)</strong>
+                  <p style={{ margin: 0, color: "#065f46", lineHeight: 1.4 }}>
+                    Released in late 2024 as Google Cloud Speech-to-Text V2's primary multilingual engine. Delivers up to 50% lower Word Error Rate on heavily accented speech, improved punctuation, and sub-word timestamp accuracy.
+                  </p>
+                </div>
+                <div style={{ border: "1px solid #c7d2fe", borderRadius: "6px", padding: "12px", background: "#eef2ff" }}>
+                  <span style={{ fontSize: "10px", fontFamily: "var(--font-mono)", color: "#4338ca", fontWeight: 700 }}>2025/2026 PREVIEW</span>
+                  <strong style={{ display: "block", fontSize: "13px", color: "#312e81", margin: "2px 0 6px" }}>Chirp 3 (Next-Gen)</strong>
+                  <p style={{ margin: 0, color: "#3730a3", lineHeight: 1.4 }}>
+                    Leverages Gemini audio-language foundation embeddings for joint acoustic-semantic tokenization. Excels at detecting colloquial disease descriptions without translating to standard dialects.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Top 10 Global LMIC Languages in Community Health */}
+            <div style={{ background: "#ffffff", border: "1px solid var(--line)", borderRadius: "10px", padding: "20px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                <h4 style={{ margin: 0, fontSize: "15px", color: "var(--ink)", display: "flex", alignItems: "center", gap: "8px" }}>
+                  <Globe style={{ width: 16, color: "var(--emerald)" }} /> Top 10 Global LMIC Languages & Dialects in Community Health
+                </h4>
+                <span style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+                  WHO IMCI & Community Health Worker (CHW) Focus
+                </span>
+              </div>
+              <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 16px", lineHeight: 1.5 }}>
+                In low-and-middle-income countries, medical triage primarily occurs via oral communication between patients and Community Health Workers (CHWs / ASHAs / HEWs). These 10 languages represent over 1.4 billion people with the highest under-5 mortality burdens:
+              </p>
+
+              <div style={{ overflowX: "auto" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "12px" }}>
+                  <thead>
+                    <tr style={{ background: "var(--card-subtle)", borderBottom: "2px solid var(--line)", textAlign: "left" }}>
+                      <th style={{ padding: "8px 10px" }}>#</th>
+                      <th style={{ padding: "8px 10px" }}>Language / Dialect</th>
+                      <th style={{ padding: "8px 10px" }}>Primary Geography</th>
+                      <th style={{ padding: "8px 10px" }}>Speakers</th>
+                      <th style={{ padding: "8px 10px" }}>Primary Health Context (WHO IMCI)</th>
+                      <th style={{ padding: "8px 10px" }}>Gateway Benchmark Case</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { rank: "1", name: "Hausa (Kano / Northern)", geo: "Nigeria, Niger, Ghana, Chad", pop: "~85M", focus: "Pediatric tachypnea (pneumonia), malaria, severe acute malnutrition.", demo: "Aminu & Fatima (Nigeria 🇳🇬)" },
+                      { rank: "2", name: "Hindi & Bhojpuri", geo: "Northern & Rural India (UP, Bihar)", pop: "~600M", focus: "ASHA triage: measles rash screening, neonatal jaundice, maternal sepsis.", demo: "Sunita Devi (India 🇮🇳)" },
+                      { rank: "3", name: "Bengali & Sylheti", geo: "Bangladesh, West Bengal (India)", pop: "~300M", focus: "BRAC CHWs: acute diarrheal dehydration (ORS), neonatal hypothermia.", demo: "Anwara Begum (Bangladesh 🇧🇩)" },
+                      { rank: "4", name: "Swahili (Kiswahili)", geo: "Tanzania, Kenya, Uganda, DRC, Rwanda", pop: "~150M", focus: "East African dispensaries: infant watery diarrhea, Zinc + ORS protocol.", demo: "Rehema Mushi (Tanzania 🇹🇿)" },
+                      { rank: "5", name: "Yoruba", geo: "Southwestern Nigeria, Benin, Togo", pop: "~45M", focus: "Febrile illness, sickle cell crises, child nutrition.", demo: "Included in Chirp 2/3" },
+                      { rank: "6", name: "Moroccan Darija (Arabizi)", geo: "Morocco, Maghreb", pop: "~35M", focus: "Pediatric asthma, Ventolin vs ER escalation, Arabic numerals/Arabizi.", demo: "Youssef (Morocco 🇲🇦)" },
+                      { rank: "7", name: "Tagalog & Ilocano", geo: "Rural Philippines", pop: "~85M", focus: "Barangay Health Workers: dengue warning signs, dehydration.", demo: "Planned Tier 2" },
+                      { rank: "8", name: "Vietnamese (Northern/Central)", geo: "Vietnam (Mekong & Highland Communes)", pop: "~95M", focus: "Commune Health Stations: infant fever, hand-foot-mouth, respiratory.", demo: "Planned Tier 2" },
+                      { rank: "9", name: "Amharic & Afaan Oromo", geo: "Ethiopia, Horn of Africa", pop: "~60M", focus: "Health Extension Workers: chest indrawing, severe pneumonia, trachoma.", demo: "Almaz Tadesse (Ethiopia 🇪🇹)" },
+                      { rank: "10", name: "Guatemalan Spanish (K'iche')", geo: "Guatemala, Central America", pop: "~18M", focus: "Rural low-literacy maternal triage, acute hypoxia (SpO2 88% red flag).", demo: "Doña Elena (Guatemala 🇬🇹)" },
+                    ].map((row) => (
+                      <tr key={row.rank} style={{ borderBottom: "1px solid var(--line)" }}>
+                        <td style={{ padding: "8px 10px", fontWeight: 700, fontFamily: "var(--font-mono)", color: "var(--muted)" }}>{row.rank}</td>
+                        <td style={{ padding: "8px 10px", fontWeight: 600, color: "var(--ink)" }}>{row.name}</td>
+                        <td style={{ padding: "8px 10px", color: "var(--ink-secondary)" }}>{row.geo}</td>
+                        <td style={{ padding: "8px 10px", fontFamily: "var(--font-mono)", color: "#047857" }}>{row.pop}</td>
+                        <td style={{ padding: "8px 10px", color: "var(--ink-secondary)", lineHeight: 1.35 }}>{row.focus}</td>
+                        <td style={{ padding: "8px 10px", fontWeight: 600, color: "#2563eb" }}>{row.demo}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
