@@ -27,7 +27,7 @@ export async function runMedicalModels(
         packet.clarification?.question || "Please confirm the dose before receiving clinical recommendations.",
       latencyMs: 0,
       status: "error",
-      errorMessage: `Blocked by gateway: ${packet.routingReasons.join(" | ")}`,
+      errorMessage: `Blocked by gateway: ${(packet.routingReasons || ["Safety check holds model"]).join(" | ")}`,
       provenance: "deterministically derived",
     }));
   }
