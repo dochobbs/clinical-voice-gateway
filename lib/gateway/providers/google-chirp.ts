@@ -1,4 +1,5 @@
 import { GoogleAuth } from "google-auth-library";
+import crypto from "crypto";
 import { ASRProviderResult, ASRWord } from "../types";
 
 export interface ChirpOptions {
@@ -43,6 +44,42 @@ export async function getGoogleAccessToken(): Promise<{ token: string | null; er
         if (!res.ok) {
           const txt = await res.text();
           return { token: null, error: `Token refresh failed (${res.status}): ${txt}` };
+        }
+        const data = await res.json();
+        if (data.access_token) {
+          cachedAccessToken = data.access_token;
+          tokenExpiresAt = now + (data.expires_in || 3600) * 1000;
+          return { token: cachedAccessToken };
+        }
+      } else if (creds.type === "service_account" && creds.client_email && creds.private_key) {
+        const iat = Math.floor(Date.now() / 1000);
+        const exp = iat + 3600;
+        const header = Buffer.from(JSON.stringify({ alg: "RS256", typ: "JWT" })).toString("base64url");
+        const claimSet = Buffer.from(JSON.stringify({
+          iss: creds.client_email,
+          scope: "https://www.googleapis.com/auth/cloud-platform",
+          aud: "https://oauth2.googleapis.com/token",
+          exp,
+          iat,
+        })).toString("base64url");
+
+        const sign = crypto.createSign("RSA-SHA256");
+        sign.update(`${header}.${claimSet}`);
+        const signature = sign.sign(creds.private_key, "base64url");
+        const jwt = `${header}.${claimSet}.${signature}`;
+
+        const res = await fetch("https://oauth2.googleapis.com/token", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
+            assertion: jwt,
+          }),
+        });
+
+        if (!res.ok) {
+          const txt = await res.text();
+          return { token: null, error: `Service account token grant failed (${res.status}): ${txt}` };
         }
         const data = await res.json();
         if (data.access_token) {
